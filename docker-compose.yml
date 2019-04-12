@@ -1,0 +1,21 @@
+version: '3'
+services:
+  php:
+    build: ./php/
+    ports:
+      - "9000:9000"
+    expose:
+      - "9000"
+    volumes:
+      - $PWD/app:/app
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - $PWD/nginx/conf.d:/data/nginx/conf.d
+      - $PWD/nginx/nginx.conf:/data/nginx/nginx.conf
+      - $PWD/nginx/logs:/data/nginx/logs
+    links:
+      - php
+    ports:
+      - "80:80"
